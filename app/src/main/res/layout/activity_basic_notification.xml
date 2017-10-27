@@ -24,7 +24,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="onSimpleNotificationClick"
-                android:text="最简单的通知" />
+                android:text="最简单的Notification" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:onClick="onNotificationWithLargeIcon"
+                android:text="带大图标的Notification" />
+
         </LinearLayout>
     </ScrollView>
 

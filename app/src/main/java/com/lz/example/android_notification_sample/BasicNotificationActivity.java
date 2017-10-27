@@ -3,18 +3,46 @@ package com.lz.example.android_notification_sample;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
 
 public class BasicNotificationActivity extends Activity {
 
+    private NotificationManager mNotifyManager;
+
+    private Bitmap largeIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_notification);
+        mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.large_icon);
     }
 
+    /**
+     * 发送一个具有大图标的简单通知
+     * 当setSmallIcon与setLargeIcon同时存在时,smallIcon显示在通知的右下角,largeIcon显示在左侧
+     * 当只设置setSmallIcon时,smallIcon显示在左侧
+     * 对于部分 ROM ，可能修改过源码，如 MIUI 上通知的大图标和小图标是没有区别的。
+     */
+    public void onNotificationWithLargeIcon(View view) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("带大图标的Notification")
+                .setContentText("有小图标、大图标、标题、内容")
+                .setLargeIcon(largeIcon);
+        mNotifyManager.notify(2, builder.build());
+    }
+
+    /**
+     * 发送一个最简单的通知
+     *
+     * @param view
+     */
     public void onSimpleNotificationClick(View view) {
         //Notification 的必要属性有三项，如果不设置则在运行时会抛出异常：
         //获取NotificationManager实例
@@ -33,5 +61,16 @@ public class BasicNotificationActivity extends Activity {
         //通过builder.build()方法生成Notification对象,并发送通知,id=1
         notifyManager.notify(1, builder.build());
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (largeIcon != null) {
+            if (!largeIcon.isRecycled()) {
+                largeIcon.recycle();
+            }
+            largeIcon = null;
+        }
     }
 }
