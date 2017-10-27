@@ -16,7 +16,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".BasicNotificationActivity" />
-        <activity android:name=".NotificationActionActivity"/>
+        <activity android:name=".NotificationActionActivity" />
+        <activity android:name=".NotificationWithPendingIntent" />
+
+        <receiver android:name=".PendingBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.lz.example.android_notification_sample.send_broadcast_action" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

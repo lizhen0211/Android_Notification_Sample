@@ -17,4 +17,9 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, BasicNotificationActivity.class);
         startActivity(intent);
     }
+
+    public void onPendingIntentClick(View view) {
+        Intent intent = new Intent(this, NotificationWithPendingIntent.class);
+        startActivity(intent);
+    }
 }
