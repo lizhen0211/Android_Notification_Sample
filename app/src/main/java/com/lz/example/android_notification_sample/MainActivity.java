@@ -22,4 +22,9 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, NotificationWithPendingIntent.class);
         startActivity(intent);
     }
+
+    public void onCancelNotification(View view) {
+        Intent intent = new Intent(this, CancelNotificationActivity.class);
+        startActivity(intent);
+    }
 }

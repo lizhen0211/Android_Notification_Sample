@@ -32,6 +32,14 @@
                 android:layout_marginTop="20dp"
                 android:onClick="onPendingIntentClick"
                 android:text="Notification中使用PendingIntent" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:onClick="onCancelNotification"
+                android:text="取消 Notification" />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

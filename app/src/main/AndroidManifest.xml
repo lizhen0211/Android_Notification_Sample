@@ -19,7 +19,7 @@
         <activity android:name=".NotificationActionActivity" />
         <activity android:name=".NotificationWithPendingIntent" />
         <activity android:name=".PendingIntentFlagActivity" />
-
+        <activity android:name=".CancelNotificationActivity"/>
         <receiver android:name=".PendingBroadcastReceiver">
             <intent-filter>
                 <action android:name="com.lz.example.android_notification_sample.send_broadcast_action" />

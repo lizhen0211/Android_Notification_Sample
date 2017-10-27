@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_cancel_notification"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.lz.example.android_notification_sample.CancelNotificationActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消 Notification'\n'
+
+取消通知有如下 5 种方式：'\n'
+1.点击通知栏的清除按钮，会清除所有可清除的通知'\n'
+2.设置了 setAutoCancel() 或 FLAG_AUTO_CANCEL 的通知，点击该通知时会清除它'\n'
+3.通过 NotificationManager 调用 cancel(int id) 方法清除指定 ID 的通知'\n'
+4.通过 NotificationManager 调用 cancel(String tag, int id) 方法清除指定 TAG 和 ID 的通知'\n'
+5.通过 NotificationManager 调用 cancelAll() 方法清除所有该应用之前发送的通知'\n'
+
+如果你是通过 NotificationManager.notify(String tag, int id, Notification notify) 方法创建的通知，那么只能通过 NotificationManager.cancel(String tag, int id) 方法才能清除对应的通知，调用NotificationManager.cancel(int id) 无效。'\n'
+" />
+</RelativeLayout>
