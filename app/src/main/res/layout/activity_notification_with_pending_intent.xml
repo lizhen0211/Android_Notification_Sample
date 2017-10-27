@@ -12,7 +12,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <Button
             android:layout_width="match_parent"
@@ -20,6 +21,12 @@
             android:onClick="onSendBroadcast"
             android:text="Notification发送广播" />
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="onStartService"
+            android:text="Notification启动服务" />
     </LinearLayout>
 
 </RelativeLayout>

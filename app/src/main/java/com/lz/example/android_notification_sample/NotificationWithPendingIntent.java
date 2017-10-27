@@ -33,6 +33,24 @@ public class NotificationWithPendingIntent extends Activity {
     public static final String SEND_BROADCAST_ACTION = "com.lz.example.android_notification_sample.send_broadcast_action";
 
     /**
+     * 使用PendingIntent 启动一个服务
+     */
+    public void onStartService(View view) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent intent = new Intent(this, PendingService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //创建 Notification.Builder 对象
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setAutoCancel(true)
+                .setContentTitle("我是启动服务的Notification")
+                .setContentText("点我会启动一个服务")
+                .setContentIntent(pendingIntent);
+        //发送通知
+        notificationManager.notify(1, builder.build());
+    }
+
+    /**
      * 使用PendingIntent 发送一个广播
      */
     public void onSendBroadcast(View view) {
