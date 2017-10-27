@@ -28,7 +28,7 @@ public class NotificationWithPendingIntent extends Activity {
     }
 
     //--------------------PendingIntent Flag start--------------------
-    public static final int FLAG_ID = 2;
+    public int flagId = 10;
 
     public static final String FLAG_CANCEL_CURRENT_ACTION = "FLAG_CANCEL_CURRENT";
 
@@ -77,7 +77,7 @@ public class NotificationWithPendingIntent extends Activity {
         // 此处从hasCode可以看出 重新生成了一个PendingIntent 他们的地址不同
         Log.e(Tag, String.valueOf(pendingIntent.hashCode()));
         //发送通知
-        notificationManager.notify(FLAG_ID, builder.build());
+        notificationManager.notify(4, builder.build());
     }
 
     /**
@@ -86,24 +86,45 @@ public class NotificationWithPendingIntent extends Activity {
      */
     public void onFlagNoCreate(View view) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent intent = new Intent(this, NotificationActionActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        //创建 Notification.Builder 对象
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setAutoCancel(true)
-                .setContentTitle("我是FLAG_NO_CREATE")
-                .setContentText("系统不存在相同的PendingIntent，将不会创建，直接返回null")
-                .setContentIntent(pendingIntent);
-        //发送通知
-        notificationManager.notify(FLAG_ID, builder.build());
+        Intent intent = new Intent(this, PendingIntentFlagActivity.class);
+        intent.setAction(FLAG_NO_CREATE_ACTION);
+        intent.putExtra("extra", "extra");
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_NO_CREATE);
+        if (pendingIntent != null) {
+            //创建 Notification.Builder 对象
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setAutoCancel(true)
+                    .setContentTitle("我是FLAG_NO_CREATE")
+                    .setContentText("hash:" + pendingIntent.hashCode())
+                    .setContentIntent(pendingIntent);
+            //发送通知
+            notificationManager.notify(flagId++, builder.build());
+        } else {
+            Log.e(Tag, "pendingIntent is null");
+        }
     }
 
     /**
      * FLAG_ONE_SHOT:该 PendingIntent 只作用一次。
      */
     public void onFlagOneShot(View view) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent intent = new Intent(this, PendingIntentFlagActivity.class);
+        intent.setAction(FLAG_ONE_SHOT_ACTION);
+        String date = sdf.format(Calendar.getInstance().getTime());
+        intent.putExtra("extra", date);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        //创建 Notification.Builder 对象
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setAutoCancel(true)
+                .setContentTitle("我是FLAG_ONE_SHOT")
+                .setContentText(date + " " + String.valueOf(pendingIntent.hashCode()))
+                .setContentIntent(pendingIntent);
 
+        //发送通知
+        notificationManager.notify(flagId++, builder.build());
     }
 
     /**
@@ -127,7 +148,7 @@ public class NotificationWithPendingIntent extends Activity {
         // 此处从hasCode可以看出 没有重新生成了一个PendingIntent 他们的地址相同
         Log.e(Tag, String.valueOf(pendingIntent.hashCode()));
         //发送通知
-        notificationManager.notify(FLAG_ID, builder.build());
+        notificationManager.notify(3, builder.build());
     }
 
     //--------------------PendingIntent Flag end--------------------
