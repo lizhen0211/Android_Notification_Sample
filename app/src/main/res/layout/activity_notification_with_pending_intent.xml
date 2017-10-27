@@ -39,8 +39,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:onClick="onFlagUpdateCurrent"
-            android:text="FLAG_UPDATE_CURRENT_ACTION" />
+            android:onClick="onFlagUpdateCurWithSameID"
+            android:text="FLAG_UPDATE_CURRENT_SAME_ID" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="onFlagUpdateCurrentWithDiffID"
+            android:text="FLAG_UPDATE_CURRENT_DIFF_ID" />
 
         <Button
             android:layout_width="match_parent"

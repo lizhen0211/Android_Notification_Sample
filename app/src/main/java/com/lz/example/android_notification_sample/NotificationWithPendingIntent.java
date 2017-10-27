@@ -131,7 +131,7 @@ public class NotificationWithPendingIntent extends Activity {
      * FLAG_UPDATE_CURRENT:如果系统中已存在该 PendingIntent 对象，那么系统将保留该 PendingIntent 对象，
      * 但是会使用新的 Intent 来更新之前 PendingIntent 中的 Intent 对象数据，例如更新 Intent 中的 Extras 。
      */
-    public void onFlagUpdateCurrent(View view) {
+    public void onFlagUpdateCurWithSameID(View view) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent intent = new Intent(this, PendingIntentFlagActivity.class);
         intent.setAction(FLAG_UPDATE_CURRENT_ACTION);
@@ -148,7 +148,35 @@ public class NotificationWithPendingIntent extends Activity {
         // 此处从hasCode可以看出 没有重新生成了一个PendingIntent 他们的地址相同
         Log.e(Tag, String.valueOf(pendingIntent.hashCode()));
         //发送通知
+        //相同的ID，状态栏中始终显示一条信息，不断更新
         notificationManager.notify(3, builder.build());
+    }
+
+    private int notifiID = 10;
+
+    public void onFlagUpdateCurrentWithDiffID(View view) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent intent = new Intent(this, PendingIntentFlagActivity.class);
+        intent.setAction(FLAG_UPDATE_CURRENT_ACTION);
+        String date = sdf.format(Calendar.getInstance().getTime());
+        intent.putExtra("extra", date);
+        //如果使用相同的requestCode，则当notifiID不同时。即状态栏中显示多条消息是。
+        //所有的Intent内容都会更新为最后一条的内容
+        //int requestCode = (int) SystemClock.uptimeMillis();
+        int requestCode = 0;
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //创建 Notification.Builder 对象
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setAutoCancel(true)
+                .setContentTitle("我是FLAG_UPDATE_CURRENT")
+                .setContentText(date + " " + String.valueOf(pendingIntent.hashCode()))
+                .setContentIntent(pendingIntent);
+        // 此处从hasCode可以看出 没有重新生成了一个PendingIntent 他们的地址相同
+        Log.e(Tag, String.valueOf(pendingIntent.hashCode()));
+        //发送通知
+        //不同的ID，每一条信息都会显示到状态栏中
+        notificationManager.notify(notifiID++, builder.build());
     }
 
     //--------------------PendingIntent Flag end--------------------
