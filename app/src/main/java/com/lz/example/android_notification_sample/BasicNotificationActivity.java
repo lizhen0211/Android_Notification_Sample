@@ -2,7 +2,9 @@ package com.lz.example.android_notification_sample;
 
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -21,6 +23,26 @@ public class BasicNotificationActivity extends Activity {
         setContentView(R.layout.activity_basic_notification);
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.large_icon);
+    }
+
+
+    /**
+     * 给通知设置Action
+     */
+    public void onNotificationWithActionClick(View view) {
+        //获取PendingIntent
+        Intent intent = new Intent(this, NotificationActionActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //创建 Notification.Builder 对象
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                //点击通知后自动清除
+                .setAutoCancel(true)
+                .setContentTitle("我是带Action的Notification")
+                .setContentText("点我会打开NotificationActionActivity")
+                .setContentIntent(pendingIntent);
+        //发送通知
+        mNotifyManager.notify(3, builder.build());
     }
 
     /**

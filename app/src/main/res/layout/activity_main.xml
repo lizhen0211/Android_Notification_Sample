@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="simpleNotificationClick"
-                android:text="最简单的通知" />
+                android:text="Notification基本用法" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
