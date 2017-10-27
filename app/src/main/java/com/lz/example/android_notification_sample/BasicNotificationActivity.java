@@ -40,6 +40,7 @@ public class BasicNotificationActivity extends Activity {
                 .setAutoCancel(true)
                 .setContentTitle("我是带Action的Notification")
                 .setContentText("点我会打开NotificationActionActivity")
+                //设置通知的action
                 .setContentIntent(pendingIntent);
         //发送通知
         mNotifyManager.notify(3, builder.build());

@@ -18,6 +18,7 @@
         <activity android:name=".BasicNotificationActivity" />
         <activity android:name=".NotificationActionActivity" />
         <activity android:name=".NotificationWithPendingIntent" />
+        <activity android:name=".PendingIntentFlagActivity" />
 
         <receiver android:name=".PendingBroadcastReceiver">
             <intent-filter>

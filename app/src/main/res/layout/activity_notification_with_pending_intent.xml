@@ -27,6 +27,21 @@
             android:layout_marginTop="20dp"
             android:onClick="onStartService"
             android:text="Notification启动服务" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="onFlagCanceCurrent"
+            android:text="FLAG_CANCEL_CURRENT" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="onFlagUpdateCurrent"
+            android:text="FLAG_UPDATE_CURRENT_ACTION" />
+
     </LinearLayout>
 
 </RelativeLayout>
