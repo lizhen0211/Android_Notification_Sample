@@ -23,8 +23,13 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    public void onCancelNotification(View view) {
+    public void onCancelNotificationClick(View view) {
         Intent intent = new Intent(this, CancelNotificationActivity.class);
+        startActivity(intent);
+    }
+
+    public void onNotificationEffectClick(View view) {
+        Intent intent = new Intent(this, NotificationEffectActivity.class);
         startActivity(intent);
     }
 }
