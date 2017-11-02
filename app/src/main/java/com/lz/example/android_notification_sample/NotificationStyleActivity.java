@@ -3,11 +3,19 @@ package com.lz.example.android_notification_sample;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class NotificationStyleActivity extends Activity {
 
@@ -80,12 +88,75 @@ public class NotificationStyleActivity extends Activity {
         notificationManager.notify(3, builder.build());
     }
 
+    /**
+     * 此种效果只在5.0以上系统中有效
+     * mainfest中需要添加<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+     * 需要在设置开启横幅通知权限（在设置通知管理中）
+     * 在部分改版rom上可能会直接弹出应用而不是显示横幅
+     *
+     * @param view
+     */
     public void onHangupStyleNotification(View view) {
-
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setContentTitle("横幅通知");
+        builder.setContentText("请在设置通知管理中开启消息横幅提醒权限");
+        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        Intent intent = new Intent(this, NotificationActionActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(pIntent);
+        //设置横幅通知模式
+        builder.setFullScreenIntent(pIntent, true);
+        builder.setAutoCancel(true);
+        Notification notification = builder.build();
+        notificationManager.notify(4, notification);
     }
 
     public void onProcessStyleNotification(View view) {
+        final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent serviceIntent = new Intent(NotificationStyleActivity.this, ProcessService.class);
+        bindService(serviceIntent, new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                final ProcessService.ProcessBinder binder = (ProcessService.ProcessBinder) service;
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        int process = binder.getProcess();
+                        if (process != -1) {
+                            NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationStyleActivity.this);
+                            builder.setSmallIcon(R.mipmap.ic_launcher);
+                            builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+                            //禁止用户点击删除按钮删除
+                            builder.setAutoCancel(false);
+                            //禁止滑动删除
+                            builder.setOngoing(true);
+                            //取消右上角的时间显示
+                            builder.setShowWhen(false);
+                            builder.setContentTitle("下载中..." + process + "%");
+                            int max = 100;
+                            builder.setProgress(max, process, false);
+                            //builder.setContentInfo(progress+"%");
+                            builder.setOngoing(true);
+                            builder.setShowWhen(false);
+                            Notification notification = builder.build();
+                            notificationManager.notify(5, notification);
+                        } else {
+                            this.cancel();
+                            notificationManager.cancel(5);
+                        }
 
+                    }
+                }, 0, 1000);
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+
+            }
+        }, BIND_AUTO_CREATE);
     }
 
     public void onMediaStyleNotification(View view) {

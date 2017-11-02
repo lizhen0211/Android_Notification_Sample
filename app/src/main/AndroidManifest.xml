@@ -3,6 +3,7 @@
     package="com.lz.example.android_notification_sample">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -23,7 +24,7 @@
         <activity android:name=".PendingIntentFlagActivity" />
         <activity android:name=".CancelNotificationActivity" />
         <activity android:name=".NotificationEffectActivity" />
-        <activity android:name=".NotificationStyleActivity"/>
+        <activity android:name=".NotificationStyleActivity" />
         <receiver android:name=".PendingBroadcastReceiver">
             <intent-filter>
                 <action android:name="com.lz.example.android_notification_sample.send_broadcast_action" />
@@ -31,6 +32,7 @@
         </receiver>
 
         <service android:name=".PendingService" />
+        <service android:name=".ProcessService" />
     </application>
 
 </manifest>
