@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_notification_style"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.lz.example.android_notification_sample.NotificationStyleActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bigTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onBigTextStyleNotification"
+            android:text="BigTextStyleNotification" />
+
+        <Button
+            android:id="@+id/inboxStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onInboxStyleNotification"
+            android:text="InboxStyleNotification" />
+
+        <Button
+            android:id="@+id/bigPictureStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onBigPictureStyleNotification"
+            android:text="BigPictureStyleNotification" />
+
+        <Button
+            android:id="@+id/hangupStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onHangupStyleNotification"
+            android:text="HangupStyleNotification" />
+
+        <Button
+            android:id="@+id/processStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onProcessStyleNotification"
+            android:text="ProcessStyleNotification" />
+
+        <Button
+            android:id="@+id/mediaStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onMediaStyleNotification"
+            android:text="MediaStyleNotification" />
+    </LinearLayout>
+</ScrollView>

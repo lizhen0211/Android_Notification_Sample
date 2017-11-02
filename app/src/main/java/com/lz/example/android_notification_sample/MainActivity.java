@@ -32,4 +32,9 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, NotificationEffectActivity.class);
         startActivity(intent);
     }
+
+    public void onNotificationStyleClick(View view) {
+        Intent intent = new Intent(this, NotificationStyleActivity.class);
+        startActivity(intent);
+    }
 }

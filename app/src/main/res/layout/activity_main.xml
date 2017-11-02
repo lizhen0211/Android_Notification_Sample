@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:onClick="onCancelNotificationClick"
-                android:text="取消 Notification" />
+                android:text="取消Notification" />
 
             <Button
                 android:layout_width="match_parent"
@@ -46,6 +46,13 @@
                 android:layout_marginTop="20dp"
                 android:onClick="onNotificationEffectClick"
                 android:text="Notification效果" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:onClick="onNotificationStyleClick"
+                android:text="Notification样式" />
 
         </LinearLayout>
     </ScrollView>
