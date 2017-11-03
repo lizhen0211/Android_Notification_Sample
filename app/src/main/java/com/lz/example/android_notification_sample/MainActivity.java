@@ -43,4 +43,9 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
+    public void onNotificationListenerClick(View view){
+        Intent intent = new Intent(this, NotificationListenerActivity.class);
+        startActivity(intent);
+    }
+
 }

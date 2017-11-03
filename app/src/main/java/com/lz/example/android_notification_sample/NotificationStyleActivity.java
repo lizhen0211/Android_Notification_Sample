@@ -89,49 +89,51 @@ public class NotificationStyleActivity extends Activity {
     }
 
     public void onProcessStyleNotification(View view) {
-        final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent serviceIntent = new Intent(NotificationStyleActivity.this, ProcessService.class);
-        bindService(serviceIntent, new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                final ProcessService.ProcessBinder binder = (ProcessService.ProcessBinder) service;
-                new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        int process = binder.getProcess();
-                        if (process != 0) {
-                            NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationStyleActivity.this);
-                            builder.setSmallIcon(R.mipmap.ic_launcher);
-                            builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-                            //禁止用户点击删除按钮删除
-                            builder.setAutoCancel(false);
-                            //禁止滑动删除
-                            builder.setOngoing(true);
-                            //取消右上角的时间显示
-                            builder.setShowWhen(false);
-                            builder.setContentTitle("下载中..." + process + "%");
-                            int max = 100;
-                            builder.setProgress(max, process, false);
-                            //builder.setContentInfo(progress+"%");
-                            builder.setOngoing(true);
-                            builder.setShowWhen(false);
-                            Notification notification = builder.build();
-                            notificationManager.notify(5, notification);
-                        } else {
-                            this.cancel();
-                            notificationManager.cancel(5);
-                        }
-
-                    }
-                }, 0, 1000);
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {
-
-            }
-        }, BIND_AUTO_CREATE);
+        bindService(serviceIntent, conn, BIND_AUTO_CREATE);
     }
+
+    private ServiceConnection conn = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            final ProcessService.ProcessBinder binder = (ProcessService.ProcessBinder) service;
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    int process = binder.getProcess();
+                    if (process != 0) {
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationStyleActivity.this);
+                        builder.setSmallIcon(R.mipmap.ic_launcher);
+                        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+                        //禁止用户点击删除按钮删除
+                        builder.setAutoCancel(false);
+                        //禁止滑动删除
+                        builder.setOngoing(true);
+                        //取消右上角的时间显示
+                        builder.setShowWhen(false);
+                        builder.setContentTitle("下载中..." + process + "%");
+                        int max = 100;
+                        builder.setProgress(max, process, false);
+                        //builder.setContentInfo(progress+"%");
+                        builder.setOngoing(true);
+                        builder.setShowWhen(false);
+                        Notification notification = builder.build();
+                        notificationManager.notify(5, notification);
+                    } else {
+                        this.cancel();
+                        notificationManager.cancel(5);
+                    }
+
+                }
+            }, 0, 1000);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
 
     public void onMediaStyleNotification(View view) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

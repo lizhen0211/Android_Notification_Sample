@@ -25,7 +25,9 @@
         <activity android:name=".CancelNotificationActivity" />
         <activity android:name=".NotificationEffectActivity" />
         <activity android:name=".NotificationStyleActivity" />
-        <activity android:name=".OtherNotificationActivity"/>
+        <activity android:name=".OtherNotificationActivity" />
+        <activity android:name=".NotificationListenerActivity" />
+
         <receiver android:name=".PendingBroadcastReceiver">
             <intent-filter>
                 <action android:name="com.lz.example.android_notification_sample.send_broadcast_action" />
@@ -34,6 +36,14 @@
 
         <service android:name=".PendingService" />
         <service android:name=".ProcessService" />
+        <service
+            android:name=".NotificationListenerServiceImpl"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
