@@ -35,7 +35,7 @@ public class ProcessService extends Service {
             if (i < 100) {
                 i += 10;
             } else {
-                i = -1;
+                i = 0;
             }
             return i;
         }

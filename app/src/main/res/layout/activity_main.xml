@@ -54,6 +54,13 @@
                 android:onClick="onNotificationStyleClick"
                 android:text="Notification样式" />
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:onClick="onNotificationOtherClick"
+                android:text="其他Notification" />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

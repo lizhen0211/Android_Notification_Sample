@@ -37,4 +37,10 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, NotificationStyleActivity.class);
         startActivity(intent);
     }
+
+    public void onNotificationOtherClick(View view) {
+        Intent intent = new Intent(this, OtherNotificationActivity.class);
+        startActivity(intent);
+    }
+
 }

@@ -37,13 +37,6 @@
             android:text="BigPictureStyleNotification" />
 
         <Button
-            android:id="@+id/hangupStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onHangupStyleNotification"
-            android:text="HangupStyleNotification" />
-
-        <Button
             android:id="@+id/processStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

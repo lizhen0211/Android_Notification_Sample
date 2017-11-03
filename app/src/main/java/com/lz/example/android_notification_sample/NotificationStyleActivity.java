@@ -88,32 +88,6 @@ public class NotificationStyleActivity extends Activity {
         notificationManager.notify(3, builder.build());
     }
 
-    /**
-     * 此种效果只在5.0以上系统中有效
-     * mainfest中需要添加<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-     * 需要在设置开启横幅通知权限（在设置通知管理中）
-     * 在部分改版rom上可能会直接弹出应用而不是显示横幅
-     *
-     * @param view
-     */
-    public void onHangupStyleNotification(View view) {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentTitle("横幅通知");
-        builder.setContentText("请在设置通知管理中开启消息横幅提醒权限");
-        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-        Intent intent = new Intent(this, NotificationActionActivity.class);
-        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pIntent);
-        //设置横幅通知模式
-        builder.setFullScreenIntent(pIntent, true);
-        builder.setAutoCancel(true);
-        Notification notification = builder.build();
-        notificationManager.notify(4, notification);
-    }
-
     public void onProcessStyleNotification(View view) {
         final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent serviceIntent = new Intent(NotificationStyleActivity.this, ProcessService.class);
@@ -125,7 +99,7 @@ public class NotificationStyleActivity extends Activity {
                     @Override
                     public void run() {
                         int process = binder.getProcess();
-                        if (process != -1) {
+                        if (process != 0) {
                             NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationStyleActivity.this);
                             builder.setSmallIcon(R.mipmap.ic_launcher);
                             builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
@@ -160,6 +134,6 @@ public class NotificationStyleActivity extends Activity {
     }
 
     public void onMediaStyleNotification(View view) {
-
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
 }
