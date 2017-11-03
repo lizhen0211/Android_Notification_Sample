@@ -49,5 +49,13 @@
             android:layout_height="wrap_content"
             android:onClick="onMediaStyleNotification"
             android:text="MediaStyleNotification" />
+
+        <Button
+            android:id="@+id/cus_notification_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onCustomNotificationLayout"
+            android:text="CustomNotificationLayout" />
+
     </LinearLayout>
 </ScrollView>

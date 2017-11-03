@@ -27,6 +27,7 @@
         <activity android:name=".NotificationStyleActivity" />
         <activity android:name=".OtherNotificationActivity" />
         <activity android:name=".NotificationListenerActivity" />
+        <activity android:name=".CustomNotificationActivity"/>
 
         <receiver android:name=".PendingBroadcastReceiver">
             <intent-filter>
@@ -43,7 +44,6 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

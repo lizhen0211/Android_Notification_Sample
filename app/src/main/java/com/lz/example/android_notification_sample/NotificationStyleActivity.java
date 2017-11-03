@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
+import android.widget.RemoteViews;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -137,5 +138,29 @@ public class NotificationStyleActivity extends Activity {
 
     public void onMediaStyleNotification(View view) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    }
+
+    public void onCustomNotificationLayout(View view) {
+        RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.remote_view_custom_notification);
+
+        int confirmRequestCode = 1;
+        Intent conIntent = new Intent(NotificationStyleActivity.this, CustomNotificationActivity.class);
+        conIntent.setAction("confirm");
+        PendingIntent conPendingIntent = PendingIntent.getActivity(this, confirmRequestCode, conIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.confirm_btn, conPendingIntent);
+
+        int cancelRequestCode = 2;
+        Intent canIntent = new Intent(NotificationStyleActivity.this, CustomNotificationActivity.class);
+        canIntent.setAction("cancel");
+        PendingIntent canPendingIntent = PendingIntent.getActivity(this, cancelRequestCode, canIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.cancel_btn, canPendingIntent);
+
+        NotificationManager notifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("自定义布局")
+                .setContentText("我是自定义布局消息")
+                .setContent(remoteViews);
+        notifyManager.notify(10, builder.build());
     }
 }
