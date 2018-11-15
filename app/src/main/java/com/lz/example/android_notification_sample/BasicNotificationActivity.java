@@ -17,11 +17,11 @@ public class BasicNotificationActivity extends Activity {
 
     private Bitmap largeIcon;
 
-    private static final String CHANNEL_ID = "a";
+    private static final String CHANNEL_ID = "channel_id";
 
-    public static final String CHANNEL_NAME = "b";
+    public static final String CHANNEL_NAME = "channel_name";
 
-    public static final String CHANNEL_DESCRIPTION = "c";
+    public static final String CHANNEL_DESCRIPTION = "channel_description";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,10 +1,12 @@
 package com.lz.example.android_notification_sample;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -14,6 +16,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class NotificationWithPendingIntent extends Activity {
+
+    private static final String CHANNEL_ID = "channel_id";
+
+    public static final String CHANNEL_NAME = "channel_name";
+
+    public static final String CHANNEL_DESCRIPTION = "channel_description";
 
     public static final String SEND_BROADCAST_ACTION = "com.lz.example.android_notification_sample.send_broadcast_action";
 
@@ -62,13 +70,14 @@ public class NotificationWithPendingIntent extends Activity {
 
     public void onFlagCanceCurrent(View view) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        createNotificationChannel(notificationManager);
         Intent intent = new Intent(this, PendingIntentFlagActivity.class);
         intent.setAction(FLAG_CANCEL_CURRENT_ACTION);
         String date = sdf.format(Calendar.getInstance().getTime());
         intent.putExtra("extra", date);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         //创建 Notification.Builder 对象
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .setContentTitle("我是FLAG_CANCEL_CURRENT")
@@ -86,13 +95,14 @@ public class NotificationWithPendingIntent extends Activity {
      */
     public void onFlagNoCreate(View view) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        createNotificationChannel(notificationManager);
         Intent intent = new Intent(this, PendingIntentFlagActivity.class);
         intent.setAction(FLAG_NO_CREATE_ACTION);
         intent.putExtra("extra", "extra");
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_NO_CREATE);
         if (pendingIntent != null) {
             //创建 Notification.Builder 对象
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setAutoCancel(true)
                     .setContentTitle("我是FLAG_NO_CREATE")
@@ -110,13 +120,14 @@ public class NotificationWithPendingIntent extends Activity {
      */
     public void onFlagOneShot(View view) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        createNotificationChannel(notificationManager);
         Intent intent = new Intent(this, PendingIntentFlagActivity.class);
         intent.setAction(FLAG_ONE_SHOT_ACTION);
         String date = sdf.format(Calendar.getInstance().getTime());
         intent.putExtra("extra", date);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         //创建 Notification.Builder 对象
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .setContentTitle("我是FLAG_ONE_SHOT")
@@ -133,13 +144,14 @@ public class NotificationWithPendingIntent extends Activity {
      */
     public void onFlagUpdateCurWithSameID(View view) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        createNotificationChannel(notificationManager);
         Intent intent = new Intent(this, PendingIntentFlagActivity.class);
         intent.setAction(FLAG_UPDATE_CURRENT_ACTION);
         String date = sdf.format(Calendar.getInstance().getTime());
         intent.putExtra("extra", date);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         //创建 Notification.Builder 对象
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .setContentTitle("我是FLAG_UPDATE_CURRENT")
@@ -156,6 +168,7 @@ public class NotificationWithPendingIntent extends Activity {
 
     public void onFlagUpdateCurrentWithDiffID(View view) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        createNotificationChannel(notificationManager);
         Intent intent = new Intent(this, PendingIntentFlagActivity.class);
         intent.setAction(FLAG_UPDATE_CURRENT_ACTION);
         String date = sdf.format(Calendar.getInstance().getTime());
@@ -166,7 +179,7 @@ public class NotificationWithPendingIntent extends Activity {
         int requestCode = 0;
         PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         //创建 Notification.Builder 对象
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .setContentTitle("我是FLAG_UPDATE_CURRENT")
@@ -201,10 +214,11 @@ public class NotificationWithPendingIntent extends Activity {
      */
     public void onStartService(View view) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        createNotificationChannel(notificationManager);
         Intent intent = new Intent(this, PendingService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         //创建 Notification.Builder 对象
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .setContentTitle("我是启动服务的Notification")
@@ -219,12 +233,13 @@ public class NotificationWithPendingIntent extends Activity {
      */
     public void onSendBroadcast(View view) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        createNotificationChannel(notificationManager);
         Intent intent = new Intent(this, PendingBroadcastReceiver.class);
         intent.setAction(SEND_BROADCAST_ACTION);
         //获取PendingIntent
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         //创建 Notification.Builder 对象
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .setContentTitle("我是发送广播的Notification")
@@ -235,4 +250,17 @@ public class NotificationWithPendingIntent extends Activity {
     }
 
     //--------------------获取PendingIntent end--------------------
+
+    private void createNotificationChannel(NotificationManager notificationManager) {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
+            channel.setDescription(CHANNEL_DESCRIPTION);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 }
