@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:onClick="showNotifyWithDefault"
-                android:text="Notification呼吸灯" />
+                android:text="Notification默认" />
 
             <Button
                 android:layout_width="match_parent"
